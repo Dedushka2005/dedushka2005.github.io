@@ -85,13 +85,13 @@
 
     <script>
         // Укажи здесь СВОЙ логин на GitHub
-        const GITHUB_USERNAME = 'dedushka2005'; 
+        //const GITHUB_USERNAME = 'dedushka2005'; 
 
         async function loadGames() {
             const listElement = document.getElementById('games-list');
             try {
                 // Запрашиваем список всех публичных репозиториев пользователя
-                const response = await fetch(`https://github.com/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+                const response = await fetch(`https://github.com/Dedushka2005/repos?per_page=100&sort=updated`);
                 if (!response.ok) throw new Error('Ошибка сети');
                 
                 const repos = await response.json();
@@ -100,7 +100,7 @@
                 // Фильтруем репозитории
                 const gameRepos = repos.filter(repo => {
                     // Исключаем сам корневой репозиторий со списком игр
-                    const isHomeRepo = repo.name.toLowerCase() === `${GITHUB_USERNAME}.github.io`.toLowerCase();
+                    const isHomeRepo = repo.name.toLowerCase() === `Dedushka2005.github.io`.toLowerCase();
                     // Проверяем, включены ли GitHub Pages ИЛИ есть ли у репозитория тег (topic) "game"
                     const hasPages = repo.has_pages;
                     
@@ -118,7 +118,7 @@
                     li.className = 'game-item';
 
                     // Формируем ссылку на саму игру (по правилам GitHub Pages URL)
-                    const gameUrl = `https://${GITHUB_USERNAME}.github.io/${repo.name}/`;
+                    const gameUrl = `https://Dedushka2005.github.io/${repo.name}/`;
                     
                     // Красиво форматируем имя репозитория (например, "super-tetris" -> "SUPER TETRIS")
                     const gameName = repo.name.replace(/-/g, ' ');
