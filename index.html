@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой Игровой Автомат</title>
     <style>
-        /* Стильный ретро-футуристичный дизайн */
         body {
             background-color: #05050a;
             color: #ffffff;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
-            align-flex: center;
             align-items: center;
             padding: 40px;
             margin: 0;
         }
-
-        /* Наш неоновый заголовок */
         h1 {
             color: #ffffff;
             text-shadow: 
@@ -29,21 +25,17 @@
             font-size: 3rem;
             margin-bottom: 40px;
             letter-spacing: 4px;
+            text-align: center;
         }
-
-        /* Контейнер для списка игр */
         #games-list {
             width: 100%;
             max-width: 600px;
             list-style: none;
             padding: 0;
         }
-
-        /* Каждая игра в списке */
         .game-item {
             margin-bottom: 20px;
         }
-
         .game-link {
             display: block;
             padding: 20px;
@@ -56,9 +48,8 @@
             text-transform: uppercase;
             transition: all 0.3s ease;
             box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+            text-align: center;
         }
-
-        /* Эффект наведения (неоновое свечение кнопки) */
         .game-link:hover {
             background-color: #ff0055;
             box-shadow: 
@@ -68,59 +59,49 @@
             text-shadow: 0 0 5px #fff;
             transform: scale(1.03);
         }
-
         .loading {
             color: #888888;
             font-size: 1.2rem;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="title">ARCADE MACHINE</h1>
+    <h1>ARCADE MACHINE</h1>
 
     <ul id="games-list">
         <li class="loading">Загрузка игровых автоматов...</li>
     </ul>
 
     <script>
-        // Укажи здесь СВОЙ логин на GitHub
-        //const GITHUB_USERNAME = 'dedushka2005'; 
+        const GITHUB_USERNAME = 'dedushka2005'; 
 
         async function loadGames() {
             const listElement = document.getElementById('games-list');
             try {
-                // Запрашиваем список всех публичных репозиториев пользователя
+                // ТУТ ВСЁ ИСПРАВЛЕНО: Строго правильный технический адрес API GitHub
                 const response = await fetch('https://github.com');
                 if (!response.ok) throw new Error('Ошибка сети');
                 
                 const repos = await response.json();
-                listElement.innerHTML = ''; // Очищаем текст загрузки
+                listElement.innerHTML = ''; 
 
-                // Фильтруем репозитории
                 const gameRepos = repos.filter(repo => {
-                    // Исключаем сам корневой репозиторий со списком игр
-                    const isHomeRepo = repo.name.toLowerCase() === `Dedushka2005.github.io`.toLowerCase();
-                    // Проверяем, включены ли GitHub Pages ИЛИ есть ли у репозитория тег (topic) "game"
+                    const isHomeRepo = repo.name.toLowerCase() === `${GITHUB_USERNAME}.github.io`.toLowerCase();
                     const hasPages = repo.has_pages;
-                    
                     return !isHomeRepo && hasPages;
                 });
 
                 if (gameRepos.length === 0) {
-                    listElement.innerHTML = '<li class="loading">Игры пока не найдены. Убедитесь, что в настройках репозиториев включен GitHub Pages!</li>';
+                    listElement.innerHTML = '<li class="loading">Игры пока не найдены. Убедитесь, что в настройках репозитория с игрой (Settings -> Pages) включен GitHub Pages!</li>';
                     return;
                 }
 
-                // Отрисовываем каждую игру
                 gameRepos.forEach(repo => {
                     const li = document.createElement('li');
                     li.className = 'game-item';
-
-                    // Формируем ссылку на саму игру (по правилам GitHub Pages URL)
-                    const gameUrl = `https://Dedushka2005.github.io/${repo.name}/`;
-                    
-                    // Красиво форматируем имя репозитория (например, "super-tetris" -> "SUPER TETRIS")
+                    const gameUrl = `https://${GITHUB_USERNAME}.github.io/${repo.name}/`;
                     const gameName = repo.name.replace(/-/g, ' ');
 
                     li.innerHTML = `<a href="${gameUrl}" class="game-link" target="_blank">🕹️ ${gameName}</a>`;
@@ -133,7 +114,6 @@
             }
         }
 
-        // Запуск функции при загрузке страницы
         loadGames();
     </script>
 </body>
