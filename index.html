@@ -91,7 +91,7 @@
             const listElement = document.getElementById('games-list');
             try {
                 // Запрашиваем список всех публичных репозиториев пользователя
-                const response = await fetch(`https://github.com/{GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+                const response = await fetch(`https://github.com${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
                 if (!response.ok) throw new Error('Ошибка сети');
                 
                 const repos = await response.json();
